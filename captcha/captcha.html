@@ -131,19 +131,33 @@
 
       // Your CAPTCHA code goes here, we've added a simple example below:
 
-	
-	    				// This part just stores the songs I want to use
-	    		//const zelda.lullaby.notes = 'B4/h, E4/q, A4/h., B4/h, E4/q, A4/h., B4/h, E4/q B5/h, G5/q, E4h.'
+	// Arrays of things we might want to randomize later
+	   let possible_notes = ["A", "B", "C", "D", "E", "F", "G"];
+	   let possible_accidents = ["n", "n", "n", "n", "n", "n", "b","b","b","#","#","#","bb","##" ]; // because Im really good at coding this is how I weighted probability
+	   let possible_key_signatures = ["C", "G","D","A","E","F","Gm","Fm","Cm","Gm"];
+	   let possible_octaves = ["4","5"]; // maybe a bigger keyboard later
+
+	// this lets us sample the arrays later for whatever we need: 
+		Array.prototype.sample = function(){
+ 			return this[Math.floor(Math.random()*this.length)];
+		}
+
+	// Generate 4 random notes with accidentials and pick a key signature:
+	    	var notes = [];
+		for (i = 1; i <5; i++){
+			notes[i] = possible_notes.sample() + possible_accidents.sample() + possible_octaves.sample() + "/q";
+		}
+
+	    	let voice_string = notes[1] + "," + notes[2] + "," + notes[3] + "," + notes[4];
+	    	let key_signature = possible_key_signatures.sample();
 
 
+					//This is the sheetmusic rendering section:
 
-
-
-					//This is the sheetmusic rendering section
 	const { Factory, EasyScore, System } = Vex.Flow;
 
 	const vf = new Factory({
-  	renderer: { elementId: 'sheet-music', width: 500, height: 200 },
+  	renderer: { elementId: 'sheet-music', width: 750, height: 200 },
 		});
 
 	const score = vf.EasyScore();
@@ -152,16 +166,19 @@
 	system
   	.addStave({
     		voices: [
-      			score.voice(score.notes('B4/h, A4/h,')),
+      			score.voice(score.notes(voice_string)),
     		],
  	 })
   	.addClef('treble')
-  	.addTimeSignature('6/4');
-
+  	.addTimeSignature('4/4')
+	.addKeySignature(key_signature);
+	//Accidental.applyAccidentals(score.voice,key_signature);
 	vf.draw();
 
 
-	    				// This is the Keyboard rendering and setup
+
+	    				// This is the Keyboard rendering and setup:
+
 	let pianoContainer = document.getElementsByClassName("piano-container");
 
 	// Set the path for the audio files here:
