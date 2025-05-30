@@ -131,6 +131,11 @@
 
       // Your CAPTCHA code goes here, we've added a simple example below:
 
+	
+	    				// This part just stores the songs I want to use
+	    		//const zelda.lullaby.notes = 'B4/h, E4/q, A4/h., B4/h, E4/q, A4/h., B4/h, E4/q B5/h, G5/q, E4h.'
+
+
 
 
 
@@ -147,23 +152,22 @@
 	system
   	.addStave({
     		voices: [
-      			score.voice(score.notes('C#5/q, B4, A4, G#4', { stem: 'up' })),
-      			score.voice(score.notes('C#4/h, C#4', { stem: 'down' })),
+      			score.voice(score.notes('B4/h, A4/h,')),
     		],
  	 })
   	.addClef('treble')
-  	.addTimeSignature('4/4');
+  	.addTimeSignature('6/4');
 
 	vf.draw();
 
 
-	    			// This is the Keyboard rendering and setup
+	    				// This is the Keyboard rendering and setup
 	let pianoContainer = document.getElementsByClassName("piano-container");
 
 	// Set the path for the audio files here:
 	const base = "./audio/";
 
-	window.onload = () => {
+	    window.onload = () => {
 
   	//draw 17 piano keys:
   	for (let index = 1; index <= 17; index++) {

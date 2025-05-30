@@ -2,9 +2,44 @@
 <html>
 	<head></head>
 	<body>
+	<dom id=boo></dom>
 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
 <script>
-const { Factory, EasyScore, System } = Vex.Flow;
+	const VF = Vex.Flow;
+var vf = new Vex.Flow.Factory({renderer: {elementId: 'boo', width: 800, height: 200}});
+var score = vf.EasyScore();
+
+score.set({ time: '2/4' });
+
+var x = 0;
+var y = 80;
+function makeSystem(width) {
+	var system = vf.System({ x: x, y: y, width: width, spaceBetweenStaves: 10 });
+	x += width;
+	return system;
+}
+
+var system = makeSystem(220)
+system.addStave({
+  voices: [score.voice(score.notes('C#5/q, B4'))]
+}).addClef('treble').addTimeSignature('2/4');
+
+system = makeSystem(200)
+system.addStave({
+  voices: [score.voice(score.notes('E4/8, G4/8, G4/8/r, E4/8'))]
+});
+
+system = makeSystem(200)
+system.addStave({
+  voices: [score.voice(score.notes('E4/q, G4/q'))]
+});
+
+system = makeSystem(200)
+system.addStave({
+  voices: [score.voice(score.notes('G4/8, A4/8, G4/8/r, G4/8'))]
+});
+
+vf.draw();
 </script>
 
 </body>
