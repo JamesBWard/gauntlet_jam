@@ -136,7 +136,7 @@
 	   let possible_notes = ["A", "B", "C", "D", "E", "F", "G"];
 	   let possible_accidents = ["n", "n", "n", "n", "n", "n", "b","b","b","#","#","#","bb","##" ]; // because Im really good at coding this is how I weighted probability
 	   let possible_key_signatures = ["C", "G","D","A","E","F","Gm","Fm","Cm","Gm"];
-	   let possible_octaves = ["4","5"]; // maybe a bigger keyboard later
+	   let possible_octaves = ["4","5"]; // maybe a bigger keyboard later 
 
 	// this lets us sample the arrays later for whatever we need: 
 		Array.prototype.sample = function(){
@@ -152,9 +152,30 @@
 	    	let voice_string = notes[1] + "," + notes[2] + "," + notes[3] + "," + notes[4];
 	    	let key_signature = possible_key_signatures.sample();
 
+	  // Please don't laugh at me but I'm just going to manually write down what each note is in the following 17 lines: 
+				//black keys
+	    var note_alt_names_01 = ["Db4/q","Db5/q","C#4/q","C#5/q"];
+	    var note_alt_names_02 = ["Eb4/q","Eb5/q","D#4/q","D#5/q"];
+	    var note_alt_names_03 = ["Gb4/q","Gb5/q","F#4/q","F#5/q"];
+	    var note_alt_names_04 = ["Ab4/q","Ab5/q","G#4/q","G#5/q"];
+	    var note_alt_names_05 = ["Bb4/q","Bb5/q","A#4/q","A#5/q"];
+	    var note_alt_names_06 = ["Db4/q","Db5/q","C#4/q","C#5/q"];
+	    var note_alt_names_07 = ["Eb4/q","Eb5/q","D#4/q","D#5/q"];
+				//white keys
+	    var note_alt_names_08 = ["Cn4/q","Cn5/q","Dbb4/q","Dbb5/q","B##4/q","B##5/q"];
+	    var note_alt_names_09 = ["Dn4/q","Dn5/q","Ebb4/q","Ebb5/q","C##4/q","C##5/q"];
+	    var note_alt_names_10 = ["En4/q","En5/q","Fbb4/q","Fbb5/q","D##4/q","D##5/q"];
+	    var note_alt_names_11 = ["Fn4/q","Fn5/q","Gbb4/q","Gbb5/q","E##4/q","E##5/q"];
+	    var note_alt_names_12 = ["Gn4/q","Gn5/q","Abb4/q","Abb5/q","F##4/q","F##5/q"];
+	    var note_alt_names_13 = ["An4/q","An5/q","Bbb4/q","Bbb5/q","G##4/q","G##5/q"];
+	    var note_alt_names_14 = ["Bn4/q","Bn5/q","Cbb4/q","Cbb5/q","A##4/q","A##5/q"];
+	    var note_alt_names_15 = ["Cn4/q","Cn5/q","Dbb4/q","Dbb5/q","B##4/q","B##5/q"];
+	    var note_alt_names_16 = ["Dn4/q","Dn5/q","Ebb4/q","Ebb5/q","C##4/q","C##5/q"];
+	    var note_alt_names_17 = ["En4/q","En5/q","Fbb4/q","Fbb5/q","D##4/q","D##5/q"];
+
+
 
 					//This is the sheetmusic rendering section:
-
 	const { Factory, EasyScore, System, Accidental } = Vex.Flow;
 
 	const vf = new Factory({
@@ -164,41 +185,58 @@
 
 	const score = vf.EasyScore();
 	const system = vf.System();
-	let foo = score.voice(score.notes(voice_string));
-	Vex.Flow.Accidental.applyAccidentals([foo],key_signature);
+	let random_measure = score.voice(score.notes(voice_string));
+	    // Earlier we gave every note an accidental (natural/flat/sharp). 
+	    //This next function removes uneccesary accidentals (don't need notes to have natural symbols in the key of C for example)
+	Vex.Flow.Accidental.applyAccidentals([random_measure],key_signature);
 
 	system
   	.addStave({
     		voices: [
-      			foo,
+      			random_measure,
     		],
  	 })
   	.addClef('treble')
   	.addTimeSignature('4/4')
 	.addKeySignature(key_signature);
-	    console.log("system: %o", system);
 	vf.draw();
 
 
 
-	    				// This is the Keyboard rendering and setup:
 
+	    				// This is the Keyboard rendering and setup:
 	let pianoContainer = document.getElementsByClassName("piano-container");
 
 	// Set the path for the audio files here:
 	const base = "./audio/";
 
-	    window.onload = () => {
+	// this tells us the user's progress through the puzzle. At first, we're looking for the 1st key
+	let solution_index = 1;
 
+	window.onload = () => {
   	//draw 17 piano keys:
   	for (let index = 1; index <= 17; index++) {
     		let div = document.createElement("div");
     		div.classList.add("key", index <= 7 ? "black-key" : "white-key");
 
-    		//For playing audio on click
+    		//What happens when you click the key: 
     		const number = index <= 9 ? "0" + index : index;
     		div.addEventListener("click", () => {
-      		new Audio(`audio/key${number}.mp3`).play();
+      			new Audio(`audio/key${number}.mp3`).play();
+	
+			
+			console.log(eval(`note_alt_names_${number}.includes(notes[solution_index])`)); 
+			if (eval(`note_alt_names_${number}.includes(notes[solution_index])`)){
+				console.log("solution found");
+				solution_index++;
+				if(solution_index == 5){
+					captchaSuccess();
+				}
+			}
+			else{
+				console.log("wrong answer");
+			}
+
     		});
     		pianoContainer[0].appendChild(div);
   	}
