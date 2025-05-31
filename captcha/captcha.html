@@ -27,8 +27,9 @@
   background-color: #2887e3;
 }
 .sheet-music {
-  display: flex;
   position: absolute;
+  padding: 4em 1em 1em 1em;
+  border-radius: 0.62em
 }
 .piano-container {
   display: flex;
@@ -154,25 +155,28 @@
 
 					//This is the sheetmusic rendering section:
 
-	const { Factory, EasyScore, System } = Vex.Flow;
+	const { Factory, EasyScore, System, Accidental } = Vex.Flow;
 
 	const vf = new Factory({
-  	renderer: { elementId: 'sheet-music', width: 750, height: 200 },
+  	renderer: { elementId: 'sheet-music' },
+  	//renderer: { elementId: 'sheet-music', width: 300, height: 200 },
 		});
 
 	const score = vf.EasyScore();
 	const system = vf.System();
+	let foo = score.voice(score.notes(voice_string));
+	Vex.Flow.Accidental.applyAccidentals([foo],key_signature);
 
 	system
   	.addStave({
     		voices: [
-      			score.voice(score.notes(voice_string)),
+      			foo,
     		],
  	 })
   	.addClef('treble')
   	.addTimeSignature('4/4')
 	.addKeySignature(key_signature);
-	//Accidental.applyAccidentals(score.voice,key_signature);
+	    console.log("system: %o", system);
 	vf.draw();
 
 
