@@ -20,12 +20,12 @@
       height: 300px;
     }
 
-    /* Your style here... */
-    body {
-  padding: 0;
-  margin: 0;
-  background-color: #2887e3;
+
+   /* Your style here... */
+
+ .red {fillStyle; "red";
 }
+
 .sheet-music {
   position: absolute;
   padding: 4em 1em 1em 1em;
@@ -132,6 +132,10 @@
 
       // Your CAPTCHA code goes here, we've added a simple example below:
 
+
+	// This tracks how far through the problem we are. Once it reaches 4 we're done.  
+	   let solution_index = 0;
+	   let note_colors = ["black", "black", "black", "black"];
 	// Arrays of things we might want to randomize later
 	   let possible_notes = ["A", "B", "C", "D", "E", "F", "G"];
 	   let possible_accidents = ["n", "n", "n", "n", "n", "n", "b","b","b","#","#","#","bb","##" ]; // because Im really good at coding this is how I weighted probability
@@ -145,73 +149,88 @@
 
 	// Generate 4 random notes with accidentials and pick a key signature:
 	    	var notes = [];
-		for (i = 1; i <5; i++){
-			notes[i] = possible_notes.sample() + possible_accidents.sample() + possible_octaves.sample() + "/q";
+		for (i = 0; i <4; i++){
+			notes[i] = possible_notes.sample() + possible_accidents.sample() + possible_octaves.sample() + "/q"; 
 		}
-
-	    	let voice_string = notes[1] + "," + notes[2] + "," + notes[3] + "," + notes[4];
+	    	let voice_string = notes[0] + "," + notes[1] + "," + notes[2] + "," + notes[3];
 	    	let key_signature = possible_key_signatures.sample();
+
 
 	  // Please don't laugh at me but I'm just going to manually write down what each note is in the following 17 lines: 
 				//black keys
-	    var note_alt_names_01 = ["Db4/q","Db5/q","C#4/q","C#5/q"];
-	    var note_alt_names_02 = ["Eb4/q","Eb5/q","D#4/q","D#5/q"];
-	    var note_alt_names_03 = ["Gb4/q","Gb5/q","F#4/q","F#5/q"];
+	    var note_alt_names_01 = ["Db4/q","Db5/q","C#4/q","C#5/q","B##4/q","B##5/q"];
+	    var note_alt_names_02 = ["Eb4/q","Eb5/q","D#4/q","D#5/q","Fbb4/q","Fbb5/q"];
+	    var note_alt_names_03 = ["Gb4/q","Gb5/q","F#4/q","F#5/q","E##4/q","E##5/q"];
 	    var note_alt_names_04 = ["Ab4/q","Ab5/q","G#4/q","G#5/q"];
-	    var note_alt_names_05 = ["Bb4/q","Bb5/q","A#4/q","A#5/q"];
-	    var note_alt_names_06 = ["Db4/q","Db5/q","C#4/q","C#5/q"];
-	    var note_alt_names_07 = ["Eb4/q","Eb5/q","D#4/q","D#5/q"];
+	    var note_alt_names_05 = ["Bb4/q","Bb5/q","A#4/q","A#5/q","Cbb4/q","Cbb5/q"];
+	    var note_alt_names_06 = ["Db4/q","Db5/q","C#4/q","C#5/q","B##4/q","B##5/q"];
+	    var note_alt_names_07 = ["Gb4/q","Gb5/q","F#4/q","F#5/q","E##4/q","E##5/q"];
 				//white keys
-	    var note_alt_names_08 = ["Cn4/q","Cn5/q","Dbb4/q","Dbb5/q","B##4/q","B##5/q"];
+	    var note_alt_names_08 = ["Cn4/q","Cn5/q","Dbb4/q","Dbb5/q","B#4/q","B#5/q"];
 	    var note_alt_names_09 = ["Dn4/q","Dn5/q","Ebb4/q","Ebb5/q","C##4/q","C##5/q"];
-	    var note_alt_names_10 = ["En4/q","En5/q","Fbb4/q","Fbb5/q","D##4/q","D##5/q"];
-	    var note_alt_names_11 = ["Fn4/q","Fn5/q","Gbb4/q","Gbb5/q","E##4/q","E##5/q"];
+	    var note_alt_names_10 = ["En4/q","En5/q","Fb4/q","Fb5/q","D##4/q","D##5/q"];
+	    var note_alt_names_11 = ["Fn4/q","Fn5/q","Gbb4/q","Gbb5/q","E#4/q","E#5/q"];
 	    var note_alt_names_12 = ["Gn4/q","Gn5/q","Abb4/q","Abb5/q","F##4/q","F##5/q"];
 	    var note_alt_names_13 = ["An4/q","An5/q","Bbb4/q","Bbb5/q","G##4/q","G##5/q"];
-	    var note_alt_names_14 = ["Bn4/q","Bn5/q","Cbb4/q","Cbb5/q","A##4/q","A##5/q"];
-	    var note_alt_names_15 = ["Cn4/q","Cn5/q","Dbb4/q","Dbb5/q","B##4/q","B##5/q"];
+	    var note_alt_names_14 = ["Bn4/q","Bn5/q","Cb4/q","Cb5/q","A##4/q","A##5/q"];
+	    var note_alt_names_15 = ["Cn4/q","Cn5/q","Dbb4/q","Dbb5/q","B#4/q","B#5/q"];
 	    var note_alt_names_16 = ["Dn4/q","Dn5/q","Ebb4/q","Ebb5/q","C##4/q","C##5/q"];
-	    var note_alt_names_17 = ["En4/q","En5/q","Fbb4/q","Fbb5/q","D##4/q","D##5/q"];
+	    var note_alt_names_17 = ["En4/q","En5/q","Fb4/q","Fb5/q","D##4/q","D##5/q"];
 
 
-
-					//This is the sheetmusic rendering section:
-	const { Factory, EasyScore, System, Accidental } = Vex.Flow;
-
-	const vf = new Factory({
-  	renderer: { elementId: 'sheet-music' },
-  	//renderer: { elementId: 'sheet-music', width: 300, height: 200 },
-		});
-
-	const score = vf.EasyScore();
-	const system = vf.System();
-	let random_measure = score.voice(score.notes(voice_string));
-	    // Earlier we gave every note an accidental (natural/flat/sharp). 
-	    //This next function removes uneccesary accidentals (don't need notes to have natural symbols in the key of C for example)
-	Vex.Flow.Accidental.applyAccidentals([random_measure],key_signature);
-
-	system
-  	.addStave({
-    		voices: [
-      			random_measure,
-    		],
- 	 })
-  	.addClef('treble')
-  	.addTimeSignature('4/4')
-	.addKeySignature(key_signature);
-	vf.draw();
+	
+	    
+	   			//This is the sheetmusic rendering section:
+    	
 
 
+	let random_measure = [];
 
 
-	    				// This is the Keyboard rendering and setup:
+	function drawMusic(){
+
+
+		const staff = document.getElementById('sheet-music');
+	        while (staff.hasChildNodes()) {
+        	        staff.removeChild(staff.firstChild);
+       	 	}
+
+	 	 const { Factory, EasyScore, System, Accidental } = Vex.Flow;
+          	 const vf = new Factory({
+                         renderer: { elementId: 'sheet-music' },
+                        });
+
+
+        	const score = vf.EasyScore();
+        	const system = vf.System();	
+        	random_measure = score.voice(score.notes(voice_string));
+        	Vex.Flow.Accidental.applyAccidentals([random_measure],key_signature);
+
+		for (let i = 0; i<4; i++){
+			random_measure.tickables[i].setStyle({fillStyle: note_colors[i], strokeStyle: note_colors[i]});
+		}
+		 system
+  		.addStave({
+    			voices: [
+      				random_measure,
+    			],
+ 	 	})
+  		.addClef('treble')
+  		.addTimeSignature('4/4')
+		.addKeySignature(key_signature);
+		vf.draw();
+	    }
+
+drawMusic();
+
+
+    				// This is the Keyboard rendering and setup:
 	let pianoContainer = document.getElementsByClassName("piano-container");
 
 	// Set the path for the audio files here:
 	const base = "./audio/";
 
 	// this tells us the user's progress through the puzzle. At first, we're looking for the 1st key
-	let solution_index = 1;
 
 	window.onload = () => {
   	//draw 17 piano keys:
@@ -227,14 +246,18 @@
 			
 			console.log(eval(`note_alt_names_${number}.includes(notes[solution_index])`)); 
 			if (eval(`note_alt_names_${number}.includes(notes[solution_index])`)){
-				console.log("solution found");
+				note_colors[solution_index] = "green";
 				solution_index++;
-				if(solution_index == 5){
+				drawMusic();
+				if(solution_index == 4){
 					captchaSuccess();
 				}
+
 			}
-			else{
-				console.log("wrong answer");
+			else
+			{
+				note_colors[solution_index] = "red";
+				drawMusic();
 			}
 
     		});
